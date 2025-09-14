@@ -10,7 +10,7 @@ env:
   IMAGE_NAME: instructions-se
   REPOSITORY: instructions-se
   SERVICE_NAME: instructions-se
-
+  
 jobs:
   instructions-se-deployment:
     name: Instructions.se Deployment
@@ -75,4 +75,3 @@ jobs:
             --platform managed \
             --allow-unauthenticated \
             --port 8080 \
-            --service-account ${{ vars.GCP_SERVICE_ACCOUNT }} \
