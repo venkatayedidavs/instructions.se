@@ -10,8 +10,8 @@ RUN npm run build
 # Production stage: serve with a tiny static HTTP server
 FROM node:22-alpine AS runtime
 WORKDIR /app
-# Install a very small static server
-RUN npm install --no-save serve@14.2.3
+# Install the latest version of serve to get security fixes
+RUN npm install --no-save serve@14.2.5
 ENV NODE_ENV=production
 # Copy build output only
 COPY --from=build /app/dist ./dist

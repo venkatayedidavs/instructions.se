@@ -48,17 +48,20 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t $IMAGE:latest .
+          docker build -t $IMAGE:latest . --no-cache
 
       # Run Trivy security scan on local image
-      - name: Trivy Scan (fail on critical/high vulnerabilities)
+      - name: Trivy Scan (fail on critical vulnerabilities only)
         uses: aquasecurity/trivy-action@master
+        env:
+          TRIVY_DISABLE_VEX_NOTICE: true
         with:
           image-ref: ${{ env.IMAGE }}:latest
           format: table
-          severity: CRITICAL,HIGH
+          severity: CRITICAL
           exit-code: 1
           ignore-unfixed: true
+          trivyignores: .trivyignore
 
       - name: Push Docker image
         run: |

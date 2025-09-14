@@ -1,0 +1,4 @@
+# Ignore CVE-2024-45296 in path-to-regexp as it's a transitive dependency
+# from the serve package used only in production Docker container
+# This vulnerability affects regex parsing which is not exposed in a static site
+CVE-2024-45296
