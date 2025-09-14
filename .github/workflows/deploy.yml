@@ -9,6 +9,7 @@ env:
   REGION: europe-west4
   IMAGE_NAME: instructions-se
   REPOSITORY: instructions-se
+  SERVICE_NAME: instructions-se
 
 jobs:
   instructions-se-deployment:
@@ -30,8 +31,13 @@ jobs:
         id: auth
         uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: projects/${{ vars.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ vars.WIF }}
+          workload_identity_provider: projects/${{ vars.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/${{ vars.WIF }}/providers/instructions-se-github-provider
           service_account: ${{ vars.GCP_SERVICE_ACCOUNT }}
+          create_credentials_file: true
+          export_environment_variables: true
+          cleanup_credentials: true
+          access_token_lifetime: 3600s
+          access_token_scopes: https://www.googleapis.com/auth/cloud-platform
 
       - name: Set up Cloud SDK
         uses: 'google-github-actions/setup-gcloud@v2'
